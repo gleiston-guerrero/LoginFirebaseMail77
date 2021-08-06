@@ -14,10 +14,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class adaptadorLista extends RecyclerView.Adapter<adaptadorLista.ViewHolder> {
+public class adaptadorLista extends RecyclerView.Adapter<adaptadorLista.ViewHolder>  implements  View.OnClickListener {
     private List<paciente> Data;
     private LayoutInflater myinflater;
     private Context context;
+    private View.OnClickListener listener;
 
     public adaptadorLista(List<paciente> itemList, Context context)
     {
@@ -33,6 +34,8 @@ public class adaptadorLista extends RecyclerView.Adapter<adaptadorLista.ViewHold
     public adaptadorLista.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View view=myinflater.inflate(R.layout.elementos, null);
+        view.setOnClickListener(this);
+
         return new adaptadorLista.ViewHolder(view);
     }
     @Override
@@ -42,6 +45,17 @@ public class adaptadorLista extends RecyclerView.Adapter<adaptadorLista.ViewHold
 
     }
     public  void  setItems(List<paciente> items){Data=items;}
+    public  void setOnClickListener(View.OnClickListener listener){
+        this.listener=listener;
+    }
+    @Override
+    public void onClick(View v) {
+        if(listener!=null)
+        {
+        listener.onClick(v);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView Nombre,Nacimiento,Genero,macAdress,deciveName,nameTutor;
         String NombresCompletos="Sin nombre";
@@ -72,8 +86,8 @@ public class adaptadorLista extends RecyclerView.Adapter<adaptadorLista.ViewHold
             Nombre.setText(NombresCompletos);
             Nacimiento.setText("Nacimiento: "+item.getBirthname());
             Genero.setText("Genero: "+item.getGender());
-            macAdress.setText("Dirección Mac: "+item.getMacadress());
-            deciveName.setText("Nombre del dispositivo: "+item.getDecivename());
+            macAdress.setText("Mac: "+item.getMacadress());
+            deciveName.setText("Dispositivo: "+item.getDecivename());
             nameTutor.setText("Nombre del tutor: "+item.getNameTutor());
 
         }

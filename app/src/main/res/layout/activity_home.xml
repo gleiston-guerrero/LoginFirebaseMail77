@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:isScrollContainer="true"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     tools:context=".HomeActivity">
 
-    <LinearLayout
+
+    <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:background="@drawable/ic_wave__5_"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="630dp"
+        android:layout_marginTop="75dp"
         android:background="#00CA4343"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_height="108dp"
             android:layout_marginTop="30dp"
-            android:layout_height="108dp">
+            android:layout_marginBottom="20dp">
 
             <ImageView
                 android:id="@+id/imageView7"
@@ -48,14 +60,15 @@
                 android:id="@+id/email"
                 android:layout_width="258dp"
                 android:layout_height="19dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginStart="128dp"
                 android:fontFamily="@font/abel"
                 android:text="TextView"
                 android:textColor="#3E3C3C"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toTopOf="@+id/textView11"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -63,7 +76,7 @@
                 android:layout_height="22dp"
 
                 android:layout_marginStart="128dp"
-                android:layout_marginTop="84dp"
+                android:layout_marginTop="76dp"
                 android:fontFamily="@font/abel"
                 android:text="Empieza a cuidar a tu familiar"
                 android:textColor="#686868"
@@ -75,10 +88,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="514dp"
+            android:layout_height="468dp"
             android:backgroundTint="#00FFFFFF"
             android:orientation="vertical"
-            android:paddingTop="10dp">
+            android:paddingTop="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,13 +137,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="106dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnAddPatiente"
                     android:layout_width="wrap_content"
-                    android:layout_height="94dp"
+                    android:layout_height="85dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="#4CAF50"
@@ -150,13 +163,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="106dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnMensajes"
                     android:layout_width="wrap_content"
-                    android:layout_height="94dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="#6AB385"
@@ -174,11 +187,12 @@
                 <Button
                     android:id="@+id/btnPatiente"
                     android:layout_width="162dp"
-                    android:layout_height="94dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="#AAB149"
                     android:fontFamily="@font/abel"
+                    android:onClick="goInformacionSensores"
                     android:text="Reporte"
                     android:textAlignment="textStart"
                     android:textIsSelectable="false"
@@ -191,13 +205,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="108dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/aaaaa"
                     android:layout_width="wrap_content"
-                    android:layout_height="94dp"
+                    android:layout_height="84dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="#E3704C"
@@ -213,47 +227,58 @@
                     app:iconSize="55dp" />
             </LinearLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp">
+
+                <Button
+                    android:id="@+id/btnConfing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#E3A03F"
+                    android:text="Configuración"
+                    android:textIsSelectable="true"
+                    app:cornerRadius="10dp"
+                    app:icon="@drawable/config"
+                    app:iconSize="25dp"
+                    app:iconTint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_cerrar"
+                    android:layout_width="127dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#F44336"
+                    android:fontFamily="@font/abel"
+                    android:padding="10dp"
+                    android:text="Cerrar"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp"
+                    app:icon="@drawable/salir1"
+                    app:iconGravity="start"
+                    app:iconSize="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></Button>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="57dp">
-
-            <Button
-                android:id="@+id/btnConfing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="15dp"
-                android:backgroundTint="#E3A03F"
-                android:text="Configuración"
-                android:textIsSelectable="true"
-                app:cornerRadius="10dp"
-                app:icon="@drawable/config"
-                app:iconSize="25dp"
-                app:iconTint="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_cerrar"
-                android:layout_width="127dp"
-                android:layout_height="46dp"
-                android:backgroundTint="#F44336"
-                android:fontFamily="@font/abel"
-                android:padding="10dp"
-                android:text="Cerrar"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                app:cornerRadius="10dp"
-                app:icon="@drawable/salir1"
-                app:iconGravity="start"
-                app:iconSize="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></Button>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/view8"
+        android:layout_width="0dp"
+        android:layout_height="79dp"
+        android:background="@drawable/ic_wave__6_"
 
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

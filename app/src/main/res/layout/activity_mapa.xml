@@ -63,21 +63,21 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="312dp"
-            android:layout_height="70dp"
+            android:layout_width="340dp"
+            android:layout_height="75dp"
             android:layout_marginStart="7dp"
             android:layout_marginTop="7dp"
-            android:background="#00F1EDED"
-            android:backgroundTint="#EFE7E7"
+            android:background="#B08BC34A"
+            android:backgroundTint="#C38BC34A"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="264dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/abel"
                 android:text="Para generar la ruta con el paciente seleccione el punto y presione el siguiente botón a lado de la lista de ubicaciones"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,13 +87,23 @@
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="72dp"
                 android:layout_marginTop="1dp"
                 android:fontFamily="@font/abel"
                 android:text="Mensage:"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/a" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

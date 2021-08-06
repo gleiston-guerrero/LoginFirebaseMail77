@@ -76,8 +76,6 @@ public class listapacientes extends AppCompatActivity {
                     paciente p= objShaptshot.getValue(paciente.class);
                     list.add(p);
                     System.out.println(list);
-                    //arrayAdapterPaciente= new ArrayAdapter<paciente>(listapacientes.this, android.R.layout.simple_list_item_1, list);
-                    //listaView.setAdapter(arrayAdapterPaciente);
                 }
                 for (int i=0; i<list.size();i++)
                 {
@@ -99,6 +97,27 @@ public class listapacientes extends AppCompatActivity {
         RecyclerView recyclerView=findViewById(R.id.listaRevista);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        lista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(listapacientes.this,informaciondispositivo.class);
+                i.putExtra("idUsuario",list.get(recyclerView.getChildAdapterPosition(v)).getIdUsuario());
+                i.putExtra("nombres",list.get(recyclerView.getChildAdapterPosition(v)).getFirstname());
+
+                i.putExtra("tutor",list.get(recyclerView.getChildAdapterPosition(v)).getNameTutor());
+                i.putExtra("fecha",list.get(recyclerView.getChildAdapterPosition(v)).getBirthname());
+
+                i.putExtra("genero",list.get(recyclerView.getChildAdapterPosition(v)).getGender());
+                i.putExtra("img",list.get(recyclerView.getChildAdapterPosition(v)).getImagBase64());
+
+
+                i.putExtra("mac",list.get(recyclerView.getChildAdapterPosition(v)).getMacadress());
+                i.putExtra("nombredispositivo",list.get(recyclerView.getChildAdapterPosition(v)).getDecivename());
+                startActivity(i);
+
+            }
+        });
         recyclerView.setAdapter(lista);
 
     }

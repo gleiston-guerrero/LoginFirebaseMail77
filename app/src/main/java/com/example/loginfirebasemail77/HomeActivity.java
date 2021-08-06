@@ -35,6 +35,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+    public void goInformacionSensores(View view)
+    {
+        Intent i = new Intent(HomeActivity.this,informaciondispositivo.class);
+        i.putExtra("idUsuario",idUsuario);
+        startActivity(i);
+    }
     public void goLista(View view)
     {
         Intent i = new Intent(HomeActivity.this,listapacientes.class);
