@@ -53,9 +53,9 @@ public class HomeActivity extends AppCompatActivity {
         i.putExtra("idUsuario",idUsuario);
         startActivity(i);
     }
-    public void goReconocimientoIdioma(View view)
+    public void goReconocimiento(View view)
     {
-        Intent i = new Intent(HomeActivity.this,reconocerIdioma.class);
+        Intent i = new Intent(HomeActivity.this,reconocimiento.class);
         i.putExtra("idUsuario",idUsuario);
         startActivity(i);
     }

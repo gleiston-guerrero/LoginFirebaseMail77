@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LoginFirebaseMail77</string>
+    <string name="app_name">Ñawi</string>
 
     <string name="invalid_mail">Ingrese mail valido</string>
     <string name="invalid_password">Ingrese un password mayor a 6 digitos</string>

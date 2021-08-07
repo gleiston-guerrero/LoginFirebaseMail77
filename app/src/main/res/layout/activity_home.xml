@@ -216,7 +216,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#E3704C"
                     android:fontFamily="@font/abel"
-                    android:onClick="goReconocimientoIdioma"
+                    android:onClick="goReconocimiento"
                     android:text="Modulo Caecus"
                     android:textAlignment="textStart"
                     android:textIsSelectable="false"
