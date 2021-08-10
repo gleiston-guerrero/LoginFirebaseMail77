@@ -11,8 +11,8 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="125dp"
+        android:layout_height="121dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/losgonawi"
         android:transitionName="logoImagen"></ImageView>
@@ -140,10 +140,25 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/button5"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="goLoginPaciente"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Soy Paciente"
+        android:textAlignment="textStart"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/caecus" />
+
+    <Button
         android:id="@+id/btn_recuperar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_width="335dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="50dp"
         android:background="#00DF5B51"
         android:padding="5dp"
         android:text="¿Olvidaste tu contraseña? recuperala aqui"

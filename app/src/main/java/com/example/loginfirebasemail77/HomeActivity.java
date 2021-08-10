@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
     public void goInformacionSensores(View view)
     {
         Intent i = new Intent(HomeActivity.this,informaciondispositivo.class);

@@ -57,7 +57,6 @@ public class mapa extends AppCompatActivity implements GoogleMap.OnMarkerClickLi
      GoogleMap mapG;
 
     List<ubicaciones> list = new ArrayList<>();
-    List<ubicaciones> listL = new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 

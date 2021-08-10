@@ -172,6 +172,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="150dp"
@@ -347,5 +348,27 @@
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgFotoPaciente" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="128dp"
+        android:text="Activar módulo Caecus"
+        android:textColor="#CC4217"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="48dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:srcCompat="@drawable/losgo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

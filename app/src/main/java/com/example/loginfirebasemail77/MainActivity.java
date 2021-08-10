@@ -106,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    public void goLoginPaciente(View view)
+    {
+        Intent i = new Intent(MainActivity.this,cuentapaciente.class);
+        startActivity(i);
+    }
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase= FirebaseDatabase.getInstance();

@@ -39,13 +39,10 @@ public class listapacientes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listapacientes);
-        //listaView=findViewById(R.id.listaComponentes);
         idUsuario=getIntent().getExtras().getString("idUsuario");
         inicializarFirebase();
         recyclerView=findViewById(R.id.listaRevista);
         listapaciente();
-        
-
     }
     public void goaddPaciente(View view)
     {
@@ -92,7 +89,6 @@ public class listapacientes extends AppCompatActivity {
     }
     public void ejecutar()
     {
-
         adaptadorLista lista= new adaptadorLista(list, this);
         RecyclerView recyclerView=findViewById(R.id.listaRevista);
         recyclerView.setHasFixedSize(true);

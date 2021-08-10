@@ -5,19 +5,12 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -29,12 +22,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.loginfirebasemail77.modelos.paciente;
 import com.example.loginfirebasemail77.modelos.reconocimientoFire;
-import com.example.loginfirebasemail77.modelos.ubicaciones;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.database.annotations.NotNull;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.label.ImageLabel;
@@ -49,8 +39,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class reconocimiento extends AppCompatActivity {
-    ImageView  ivPicture;
+public class registroReconocimiento extends AppCompatActivity {
+
+    ImageView ivPicture;
     TextView txtResult;
     Button bntChoosePicture,btnOpenCamara;
     private static final String TAG = "MiTag";
@@ -62,7 +53,7 @@ public class reconocimiento extends AppCompatActivity {
     ActivityResultLauncher<Intent> galleryLauncher;
 
 
-    List<reconocimientoFire>  listReconocimiento;
+    List<reconocimientoFire> listReconocimiento;
     ListView listaView;
     ArrayAdapter<reconocimientoFire> arrayAdapterreconocimientoFire;
     InputImage inputImage;
@@ -71,54 +62,24 @@ public class reconocimiento extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reconocimiento);
-
-        ivPicture=findViewById(R.id.ivPicture);
-        bntChoosePicture=findViewById(R.id.bntChoosePicture);
-        btnOpenCamara=findViewById(R.id.btnOpenCamara);
-        listaView = findViewById(R.id.lstResult);
+        setContentView(R.layout.activity_registro_reconocimiento);
+        ivPicture=findViewById(R.id.ivPicture2);
+        bntChoosePicture=findViewById(R.id.idGaleria);
+        listaView = findViewById(R.id.listaPaciente);
         labeler= ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
 
 
 
-        btnOpenCamara.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent camaraIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraLauncher.launch(camaraIntent);
-                Toast.makeText(reconocimiento.this, "No hay",Toast.LENGTH_SHORT).show();
-            }
-        });
         bntChoosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(reconocimiento.this, "Buscar img",Toast.LENGTH_SHORT).show();
+                Toast.makeText(registroReconocimiento.this, "Buscar img",Toast.LENGTH_SHORT).show();
                 Intent storIntent= new Intent();
                 storIntent.setType("image/*");
                 storIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryLauncher.launch(storIntent);
             }
         });
-        cameraLauncher=registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                            Intent data =result.getData();
-                            try
-                            {
-                                Bitmap photo=(Bitmap) data.getExtras().get("data");
-                                ivPicture.setImageBitmap(photo);
-                                inputImage=InputImage.fromBitmap(photo,0);
-                                processImage();
-                            }catch (Exception e)
-                            {
-                                Log.d(TAG, "onActivityResult: "+e.getMessage());
-                            }
-                    }
-                }
-        );
-
         galleryLauncher=registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -127,7 +88,7 @@ public class reconocimiento extends AppCompatActivity {
 
                         Intent data=result.getData();
                         try{
-                            inputImage=InputImage.fromFilePath(reconocimiento.this, data.getData());
+                            inputImage=InputImage.fromFilePath(registroReconocimiento.this, data.getData());
                             ivPicture.setImageURI(data.getData());
                             processImage();
                         }catch (Exception e)
@@ -136,9 +97,19 @@ public class reconocimiento extends AppCompatActivity {
                         }
                     }
                 }
-                );
+        );
+
     }
 
+    public void abriGaleria(View view)
+    {
+        Toast.makeText(registroReconocimiento.this, "Buscar img",Toast.LENGTH_SHORT).show();
+        Intent storIntent= new Intent();
+        storIntent.setType("image/*");
+        storIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryLauncher.launch(storIntent);
+
+    }
     private void processImage() {
         labeler.process(inputImage)
                 .addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
@@ -150,9 +121,9 @@ public class reconocimiento extends AppCompatActivity {
                         for (ImageLabel label: imageLabels)
                         {
                             listReconocimiento.add(new reconocimientoFire((label.getConfidence()+""),label.getText()));
-                           // txtResult.setText(result);
+                            // txtResult.setText(result);
                         }
-                        arrayAdapterreconocimientoFire = new ArrayAdapter<reconocimientoFire>(reconocimiento.this, android.R.layout.simple_list_item_1, listReconocimiento);
+                        arrayAdapterreconocimientoFire = new ArrayAdapter<reconocimientoFire>(registroReconocimiento.this, android.R.layout.simple_list_item_1, listReconocimiento);
                         listaView.setAdapter(arrayAdapterreconocimientoFire);
 
                     }
@@ -165,55 +136,57 @@ public class reconocimiento extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
-    }
-    public void checkPermission(String permission, int requestCode)
-    {
-        if(ContextCompat.checkSelfPermission(reconocimiento.this, permission)== PackageManager.PERMISSION_DENIED)
-        {
-            ActivityCompat.requestPermissions(reconocimiento.this,new String[]{permission},requestCode);
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL("https://res.cloudinary.com/durxpegdm/image/upload/v1627940101/3d-flame-279_xt18fx.png");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            Log.d(TAG,"error"+e.getMessage());
+            return null;
         }
     }
+
+
     @Override
     public  void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults )
     {
         super.onRequestPermissionsResult(requestCode, permission, grantResults);
         if(requestCode== CAMERA_PERMISSION_CODE)
         {
-            if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-            { Toast.makeText(reconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();
+            if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED)
+            { Toast.makeText(registroReconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();
             }else
-            { Toast.makeText(reconocimiento.this,"Denego los permisos", Toast.LENGTH_SHORT).show();}
+            { Toast.makeText(registroReconocimiento.this,"Denego los permisos", Toast.LENGTH_SHORT).show();}
         }
         else if(requestCode==STORAGE_PERMISSION_CODE)
         {
             if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
-                Toast.makeText(reconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();}
+                Toast.makeText(registroReconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();}
             else
-            {Toast.makeText(reconocimiento.this,"Permisos denegados", Toast.LENGTH_SHORT).show();}
+            {Toast.makeText(registroReconocimiento.this,"Permisos denegados", Toast.LENGTH_SHORT).show();}
         }
         else  if(requestCode==READ_STORAGE_PERMISSION_CODE)
-    {
-        if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
         {
-            Toast.makeText(reconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();}
-        else
-        {Toast.makeText(reconocimiento.this,"Permisos denegados", Toast.LENGTH_SHORT).show();}
-    }
+            if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(registroReconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();}
+            else
+            {Toast.makeText(registroReconocimiento.this,"Permisos denegados", Toast.LENGTH_SHORT).show();}
+        }
         else  if(requestCode==WRITE_STORAGE_PERMISSION_CODE)
         {
             if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
-                Toast.makeText(reconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();}
+                Toast.makeText(registroReconocimiento.this,"Acepto los permisos", Toast.LENGTH_SHORT).show();}
             else
-            {Toast.makeText(reconocimiento.this,"Permisos denegados", Toast.LENGTH_SHORT).show();}
+            {Toast.makeText(registroReconocimiento.this,"Permisos denegados", Toast.LENGTH_SHORT).show();}
         }
     }
-    //--------------------------------------------Parte de los permisos---------------------------------------------------//
 
 }
