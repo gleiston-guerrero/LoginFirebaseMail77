@@ -7,6 +7,37 @@
     tools:context=".registroReconocimiento">
 
     <View
+        android:id="@+id/view13"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/switch2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view12"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+    <View
+        android:id="@+id/view11"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+    <View
         android:id="@+id/view10"
         android:layout_width="0dp"
         android:layout_height="79dp"
@@ -19,22 +50,24 @@
     <View
         android:id="@+id/view9"
         android:layout_width="0dp"
-        android:layout_height="501dp"
+        android:layout_height="374dp"
         android:background="@drawable/ic_caecus_3_"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listaPaciente"
-        android:layout_width="322dp"
-        android:layout_height="220dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="416dp"
-        android:layout_marginEnd="50dp"
+        android:layout_width="327dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/switch2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
     <Button
         android:id="@+id/idGaleria"
@@ -52,30 +85,32 @@
 
     <TextView
         android:id="@+id/textView38"
-        android:layout_width="260dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="336dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/abel"
         android:text="Bienvenidos al módulo Caecus"
-        android:textColor="#2E2E2E"
-        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="#FFF4F4"
+        android:textSize="48sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivPicture2"
-        android:layout_width="237dp"
+        android:layout_width="244dp"
         android:layout_height="215dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="132dp"
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
-        android:src="@drawable/fotografia"
+        android:src="@drawable/losgo"
         app:civ_border_color="#E47451"
         app:civ_border_width="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,26 +118,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView15"
-        android:layout_width="91dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/losgo" />
-
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnOpenCamara3"
         android:layout_width="150dp"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="#FF9800"
-        android:text="Sonido"
+        android:text="Camara"
         app:cornerRadius="15dp"
-        app:icon="@drawable/sonido"
+        app:icon="@drawable/logo"
         app:iconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -111,13 +136,39 @@
         android:id="@+id/textView39"
         android:layout_width="89dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/abel"
         android:text="Resultados"
         android:textColor="#1E1E1E"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/listaPaciente"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPicture2" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/abel"
+        android:text="Activación de voz"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/view10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listaPaciente" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/abel"
+        android:text="Spanish"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/view10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listaPaciente" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

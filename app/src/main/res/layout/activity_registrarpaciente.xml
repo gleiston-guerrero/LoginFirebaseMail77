@@ -341,7 +341,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:layout_marginBottom="25dp">
+                android:layout_marginBottom="20dp">
 
                 <EditText
                     android:id="@+id/txtMac_R"
@@ -350,6 +350,15 @@
                     android:ems="10"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Switch
+                android:id="@+id/swStado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/abel"
+                android:text="Habilitar modulo  caecus"
+                android:textColor="#59200E" />
 
             <Button
                 android:id="@+id/bntGuardar"

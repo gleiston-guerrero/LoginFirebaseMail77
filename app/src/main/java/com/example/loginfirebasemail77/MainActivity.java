@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         awesomeValidation.addValidation(this,R.id.et_mail, Patterns.EMAIL_ADDRESS,R.string.invalid_mail);
         awesomeValidation.addValidation(this,R.id.et_pass,".{6,}",R.string.invalid_password);
 
-
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         btn_recuperar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,12 +102,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
     public void goLoginPaciente(View view)
-    {
-        Intent i = new Intent(MainActivity.this,cuentapaciente.class);
-        startActivity(i);
-    }
+    { Intent i = new Intent(MainActivity.this,cuentapaciente.class);
+      startActivity(i); }
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase= FirebaseDatabase.getInstance();
@@ -126,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
-
     private void listapaciente() {
         databaseReference.child("Usuarios").orderByChild("email").equalTo(et_mail.getText().toString()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -150,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void dameToastdeerror(String error) {
 
         switch (error) {

@@ -27,6 +27,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,7 @@ public class registrarpaciente extends AppCompatActivity {
     String path;
     Image image;
     TextView tv;
+    Switch estado;
     private static int RESULT_LOAD_IMAGE = 1;
     //fin de variables para imagenes
     private static final String TAG = "MiTag";
@@ -103,6 +105,7 @@ public class registrarpaciente extends AppCompatActivity {
         btnFecha=findViewById(R.id.btnFechaNacimiento_R);
         rbtMasculino=findViewById(R.id.radioButton_R);
         rbtFemenino=findViewById(R.id.radioButton2_R);
+        estado=findViewById(R.id.swStado);
         //----Fin--de-Iniciando--los--componentes--------//
 
         Calendar cal=Calendar.getInstance();
@@ -244,8 +247,16 @@ public class registrarpaciente extends AppCompatActivity {
         p.setGender(genero);
         p.setDecivename(decivename.getText().toString());
         p.setIdUsuario(idUsuario);
+        p.setMacadress(macadress.getText().toString());
+        if(estado.isChecked())
+        {
+            p.setState("true");
+        }else
+        {
+            p.setState("false");
+        }
 
-        p.setState("True");
+
         databaseReference.child("Paciente").child(p.getIdpatient()).setValue(p);
         Toast.makeText(this, "Agregado", Toast.LENGTH_SHORT).show();
     }

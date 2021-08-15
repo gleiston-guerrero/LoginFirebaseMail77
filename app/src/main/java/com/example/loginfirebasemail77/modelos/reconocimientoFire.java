@@ -65,7 +65,7 @@ public class reconocimientoFire {
 
     @Override
     public String toString() {
-        return  "Confianza='" + confianza + '\n' +
-                "Reconocimiento='" + reconocimiento + '\n';
+        return  "Confianza:'" + confianza + '\n' +
+                "Reconocimiento=:'" + reconocimiento + '\n';
     }
 }

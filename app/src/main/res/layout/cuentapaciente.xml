@@ -10,7 +10,7 @@
         android:id="@+id/view7"
         android:layout_width="0dp"
         android:layout_height="79dp"
-        android:background="@drawable/ic_wave__6_"
+        android:background="@drawable/ic_caecus_1_"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
     <View
         android:id="@+id/view6"
         android:layout_width="0dp"
-        android:layout_height="388dp"
+        android:layout_height="320dp"
         android:background="@drawable/ic_caecus_3_"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,27 +28,33 @@
         android:id="@+id/btn_recuperar2"
         android:layout_width="220dp"
         android:layout_height="39dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="70dp"
         android:background="#00DF5B51"
+        android:fontFamily="@font/abel"
         android:padding="5dp"
         android:text="Volvel a Login de Tutor"
         android:textColor="#494847"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"></Button>
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnIngresarPaciente"
+        app:layout_constraintVertical_bias="0.272"></Button>
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="356dp"
         android:layout_height="177dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="216dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView37">
 
         <TextView
             android:id="@+id/textView34"
@@ -56,6 +62,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/abel"
             android:text="Nombre del dispositivo"
+            android:textAlignment="center"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,6 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:text="Francisco"
+                android:fontFamily="@font/abel"
                 android:inputType="textPersonName" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -80,6 +89,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/abel"
             android:text="Mac del dispositivo"
+            android:textAlignment="center"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +97,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            app:passwordToggleEnabled="true"
             android:layout_marginBottom="5dp">
 
             <EditText
@@ -95,72 +104,82 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPassword"
-                />
+                android:text="Francisco"
+                android:fontFamily="@font/abel"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="127dp"
-        android:layout_height="158dp"
-        android:layout_marginTop="92dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blind" />
-
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnIngresarPaciente"
         android:layout_width="272dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="136dp"
-        android:onClick="goIngresar"
-        android:text="Ingresar como Paciente"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="96dp"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#FF9800"
         android:fontFamily="@font/abel"
-        android:text="Bienvenido paciente!"
-        android:textAlignment="textStart"
-        android:textColor="#353535"
-        android:textSize="37dp"
+        android:text="Ingresar como Paciente"
         android:textStyle="bold"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
     <TextView
         android:id="@+id/textView37"
         android:layout_width="283dp"
         android:layout_height="48dp"
-        android:layout_marginTop="272dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/abel"
         android:text="Inicio de sesión"
         android:textAlignment="center"
-        android:textColor="#353535"
+        android:textColor="#4C4A4A"
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
     <ImageView
         android:id="@+id/imageView13"
-        android:layout_width="79dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="211dp"
+        android:layout_height="188dp"
+        android:layout_marginTop="112dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.018"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/losgo" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="382dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/abel"
+        android:text="Bienvenido paciente!"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view6" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/abel"
+        android:text="Módulo Caecus - Reconocimiento de objetos"
+        android:textColor="#F8F4F4"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

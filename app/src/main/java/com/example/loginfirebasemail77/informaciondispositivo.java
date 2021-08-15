@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.loginfirebasemail77.modelos.sensores;
@@ -31,6 +35,8 @@ public class informaciondispositivo extends AppCompatActivity {
     TextView DistanciaFrente;
     TextView DistanciaIzquierda;
     TextView cayo;
+    Switch estado;
+    Button bntGraficas;
     ImageView imgView;
     String idUsuario;
     TextView  nombres, genero, mac2, nombredispo,nombreTutor, fecha;
@@ -46,17 +52,26 @@ public class informaciondispositivo extends AppCompatActivity {
         genero=findViewById(R.id.TxtPerfilGenero);
         mac2=findViewById(R.id.txtPerfilMacdispositivo);
         nombredispo=findViewById(R.id.txtPerfilDeciveName);
-        //nombreTutor=findViewById(R.id.txtPerfilNombre);
         imgView=findViewById(R.id.imgFotoPaciente);
         fecha=findViewById(R.id.TxtPerfilNacimiento);
+        estado=findViewById(R.id.switch1);
+        bntGraficas=findViewById(R.id.bntGraficas);
 
         fecha.setText(getIntent().getExtras().getString("fecha"));
         nombres.setText(getIntent().getExtras().getString("nombres"));
         genero.setText(getIntent().getExtras().getString("genero"));
         mac2.setText(getIntent().getExtras().getString("mac"));
         nombredispo.setText(getIntent().getExtras().getString("nombredispositivo"));
-        //nombreTutor.setText(getIntent().getExtras().getString("tutor"));
         Picasso.get().load(getIntent().getExtras().getString("img")).resize(100,100).centerCrop().into(imgView);
+
+        bntGraficas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(informaciondispositivo.this,graficas.class);
+                i.putExtra("idUsuario",idUsuario);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -87,14 +102,13 @@ public class informaciondispositivo extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         firebaseDatabase= FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference();
-         DistanciaDerecha=findViewById(R.id.txtSensorDerecho);
-         DistanciaFrente=findViewById(R.id.txtSensorFrontal);
-         DistanciaIzquierda=findViewById(R.id.txtSensorIzquierdo);
-         cayo=findViewById(R.id.txtCaida);
+        DistanciaDerecha=findViewById(R.id.txtSensorDerecho);
+        DistanciaFrente=findViewById(R.id.txtSensorFrontal);
+        DistanciaIzquierda=findViewById(R.id.txtSensorIzquierdo);
+        cayo=findViewById(R.id.txtCaida);
     }
     private void informacionSensores() {
 
-        System.out.println("entro");
         databaseReference.child("Sensores").orderByKey().equalTo("2C:F4:32:19:78:F6").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

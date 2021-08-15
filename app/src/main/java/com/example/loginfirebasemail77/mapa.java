@@ -183,8 +183,6 @@ public class mapa extends AppCompatActivity implements GoogleMap.OnMarkerClickLi
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
                 try {
                     jso = new JSONObject(response);
                     //trazarRuta(jso);
@@ -193,15 +191,12 @@ public class mapa extends AppCompatActivity implements GoogleMap.OnMarkerClickLi
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
-
         queue.add(stringRequest);
     }
     private void trazarRuta(JSONObject jso) {

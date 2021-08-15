@@ -15,17 +15,28 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.loginfirebasemail77.modelos.reconocimientoFire;
+import com.example.loginfirebasemail77.modelos.ubicaciones;
+import com.example.loginfirebasemail77.reproducir.TTSManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.label.ImageLabel;
 import com.google.mlkit.vision.label.ImageLabeler;
@@ -58,6 +69,20 @@ public class registroReconocimiento extends AppCompatActivity {
     ArrayAdapter<reconocimientoFire> arrayAdapterreconocimientoFire;
     InputImage inputImage;
     ImageLabeler labeler;
+    reconocimientoFire selectReconocimiento;
+
+
+    private Button btnSpeak;
+    private EditText editText;
+    TTSManager ttsManager=null;
+    String text="No hay";
+
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
+    Translator translator;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +91,11 @@ public class registroReconocimiento extends AppCompatActivity {
         ivPicture=findViewById(R.id.ivPicture2);
         bntChoosePicture=findViewById(R.id.idGaleria);
         listaView = findViewById(R.id.listaPaciente);
+        btnOpenCamara=findViewById(R.id.btnOpenCamara3);
         labeler= ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
-
-
+        ttsManager = new TTSManager();
+        ttsManager.init(this);
+        inicializarFirebase();
 
         bntChoosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +126,93 @@ public class registroReconocimiento extends AppCompatActivity {
                 }
         );
 
+
+        listaView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                selectReconocimiento= (reconocimientoFire) parent.getItemAtPosition(position);
+                text=selectReconocimiento.getReconocimiento().toString();
+                prepareModel(text);
+                return false;
+
+            }
+        });
+
+
+        btnOpenCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent camaraIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraLauncher.launch(camaraIntent);
+                Toast.makeText(registroReconocimiento.this, "No hay",Toast.LENGTH_SHORT).show();
+            }
+        });
+        cameraLauncher=registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Intent data =result.getData();
+                        try
+                        {
+                            Bitmap photo=(Bitmap) data.getExtras().get("data");
+                            ivPicture.setImageBitmap(photo);
+                            inputImage=InputImage.fromBitmap(photo,0);
+                            processImage();
+                        }catch (Exception e)
+                        {
+                            Log.d(TAG, "onActivityResult: "+e.getMessage());
+                        }
+                    }
+                }
+        );
+
     }
 
+    private void traslaterlenguaje(String text) {
+
+        translator.translate(text).addOnSuccessListener(new OnSuccessListener<String>(){
+            @Override
+            public  void onSuccess(String s)
+            {
+                ttsManager.initQueue(s);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull  Exception e) {
+                ttsManager.initQueue("Fallo al traducir");
+            }
+        });
+
+    }
+
+    private void prepareModel(String text) {
+
+        TranslatorOptions options =
+                new TranslatorOptions.Builder()
+                        .setSourceLanguage(TranslateLanguage.fromLanguageTag("en"))
+                        .setTargetLanguage(TranslateLanguage.fromLanguageTag("es"))
+                        .build();
+        translator = Translation.getClient(options);
+        translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                traslaterlenguaje(text);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ttsManager.shutDown();
+    }
     public void abriGaleria(View view)
     {
         Toast.makeText(registroReconocimiento.this, "Buscar img",Toast.LENGTH_SHORT).show();
@@ -109,6 +221,11 @@ public class registroReconocimiento extends AppCompatActivity {
         storIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryLauncher.launch(storIntent);
 
+    }
+    private void inicializarFirebase() {
+        FirebaseApp.initializeApp(this);
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference();
     }
     private void processImage() {
         labeler.process(inputImage)
@@ -150,7 +267,10 @@ public class registroReconocimiento extends AppCompatActivity {
             return null;
         }
     }
+    public void reproducir()
+    {
 
+    }
 
     @Override
     public  void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults )
