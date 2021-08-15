@@ -82,7 +82,6 @@ public class informaciondispositivo extends AppCompatActivity {
                 list.clear();
                 for (DataSnapshot objShaptshot : snapshot.getChildren())
                 {
-                    System.out.println("objShaptshot : "+objShaptshot);
                     TextView coox= findViewById(R.id.latitude);
                     TextView cooY= findViewById(R.id.longitud);
                     coox.setText(objShaptshot.child("coorX").getValue().toString().substring(0,10));
@@ -97,7 +96,11 @@ public class informaciondispositivo extends AppCompatActivity {
             }
         });
     }
-
+    public  void goReconocimientoTimeReal(View view)
+    {
+        Intent i = new Intent(informaciondispositivo.this,reconocimientoTimeReal.class);
+        startActivity(i);
+    }
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase= FirebaseDatabase.getInstance();

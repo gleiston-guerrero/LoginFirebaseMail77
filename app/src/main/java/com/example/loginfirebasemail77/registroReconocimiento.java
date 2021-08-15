@@ -11,8 +11,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,15 +26,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.loginfirebasemail77.modelos.reconocimientoFire;
 import com.example.loginfirebasemail77.modelos.ubicaciones;
 import com.example.loginfirebasemail77.reproducir.TTSManager;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
@@ -42,13 +55,17 @@ import com.google.mlkit.vision.label.ImageLabel;
 import com.google.mlkit.vision.label.ImageLabeler;
 import com.google.mlkit.vision.label.ImageLabeling;
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class registroReconocimiento extends AppCompatActivity {
 
@@ -80,7 +97,7 @@ public class registroReconocimiento extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
+    StorageReference storageReference;
     Translator translator;
 
 
@@ -96,6 +113,7 @@ public class registroReconocimiento extends AppCompatActivity {
         ttsManager = new TTSManager();
         ttsManager.init(this);
         inicializarFirebase();
+        esp32cam();
 
         bntChoosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +143,6 @@ public class registroReconocimiento extends AppCompatActivity {
                     }
                 }
         );
-
-
         listaView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -168,6 +184,77 @@ public class registroReconocimiento extends AppCompatActivity {
                 }
         );
 
+    }
+    public String nombreAleatodio()
+    {
+
+        int p=(int) (Math.random()*25+1); int s=(int) (Math.random()*25+1);
+        int t=(int) (Math.random()*25+1);int c=(int) (Math.random()*25+1);
+        int numero1=(int) (Math.random()*1012+2111);
+        int numero2=(int) (Math.random()*1012+2111);
+
+        String[] elementos={"a","b","c","d","e","f","g","h","i","j","k","l",
+                "m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        final String aleatorio=elementos[p]+elementos[s]+numero1+elementos[t]+elementos[c]+numero2+"comprimido.jpg";
+        return  aleatorio;
+    }
+    private void esp32cam() {
+        databaseReference.child("esp32cam").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot objShaptshot : snapshot.getChildren())
+                {
+                    String baseRe=objShaptshot.child("photo").getValue().toString().split(",")[1];
+                    String base=baseRe.replace("%2F","/").replace("%2B","+");
+                    System.out.println(baseRe.replace("%2F","/"));
+                    byte[] decodedString = Base64.decode(base, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    ivPicture.setImageBitmap(decodedByte);
+
+                    StorageReference reference=storageReference.child("esp32Photo");
+                    UploadTask uploadTask = reference.putBytes(decodedString);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    });
+
+                    Task<Uri> uriTask= uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then( Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if(!task.isSuccessful()){
+                                throw Objects.requireNonNull(task.getException());
+                            }
+                            return reference.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(Task<Uri> task) {
+                            Uri dUri=task.getResult();
+                             System.out.println("Uri "+dUri.toString());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("elementos: "+error.getMessage());
+            }
+        });
+    }
+    private void inicializarFirebase() {
+        FirebaseApp.initializeApp(this);
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference();
+        storageReference= FirebaseStorage.getInstance().getReference().child("Esp32");
     }
 
     private void traslaterlenguaje(String text) {
@@ -222,11 +309,7 @@ public class registroReconocimiento extends AppCompatActivity {
         galleryLauncher.launch(storIntent);
 
     }
-    private void inicializarFirebase() {
-        FirebaseApp.initializeApp(this);
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference();
-    }
+
     private void processImage() {
         labeler.process(inputImage)
                 .addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {

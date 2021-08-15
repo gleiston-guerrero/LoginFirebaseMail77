@@ -21,9 +21,10 @@
         android:id="@+id/view12"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="28dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view9" />
 
@@ -57,8 +58,8 @@
 
     <ListView
         android:id="@+id/listaPaciente"
-        android:layout_width="327dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="196dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="5dp"
@@ -101,20 +102,20 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivPicture2"
-        android:layout_width="244dp"
-        android:layout_height="215dp"
+        android:layout_width="280dp"
+        android:layout_height="201dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="152dp"
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
         android:src="@drawable/losgo"
         app:civ_border_color="#E47451"
         app:civ_border_width="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -136,12 +137,13 @@
         android:id="@+id/textView39"
         android:layout_width="89dp"
         android:layout_height="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/abel"
         android:text="Resultados"
         android:textColor="#1E1E1E"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.546"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPicture2" />
 
