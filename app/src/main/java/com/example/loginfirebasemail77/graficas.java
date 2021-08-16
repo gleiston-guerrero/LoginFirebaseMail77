@@ -89,8 +89,7 @@ public class graficas extends AppCompatActivity implements GoogleMap.OnMarkerCli
         Marker campusUteq = mapG.addMarker(
                 new MarkerOptions()
                         .position(uteqCampus)
-                        .title("Ubicación")
-                        .snippet("Hola"));
+                        .title("Ubicación"));
         campusUteq.showInfoWindow();
     }
 

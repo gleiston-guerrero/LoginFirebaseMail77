@@ -107,7 +107,6 @@
             android:onClick="goMapa"
             app:fab_icon="@drawable/mapa"
             app:fab_size="mini" />
-
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/idMenu"
             android:layout_width="wrap_content"
@@ -116,6 +115,5 @@
             android:onClick="goHome"
             app:fab_icon="@drawable/home"
             app:fab_size="mini" />
-
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </androidx.constraintlayout.widget.ConstraintLayout>
