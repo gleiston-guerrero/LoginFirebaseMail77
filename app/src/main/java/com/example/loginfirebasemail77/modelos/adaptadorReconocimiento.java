@@ -79,7 +79,7 @@ public class adaptadorReconocimiento extends RecyclerView.Adapter<adaptadorRecon
             url=item.getUrl();
             Picasso.get().load(url).resize(100,100).centerCrop().into(imgReconocimiento);
             reconocimiento.setText(item.getReconocimiento().replace(";","\n"));
-            confienza.setText(item.getConfianza());
+            confienza.setText(item.getConfianza().replace(";","\n"));
 
         }
     }

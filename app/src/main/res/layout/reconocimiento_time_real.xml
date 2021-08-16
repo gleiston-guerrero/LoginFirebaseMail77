@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#4CAF50"
+    android:backgroundTint="#4CAF50"
     tools:context=".reconocimientoTimeReal">
 
     <TextView
@@ -15,7 +17,7 @@
         android:gravity="center"
         android:text="Recuerda siempre estar atento a sus seres queridos"
         android:textAlignment="textStart"
-        android:textColor="#3C3C3C"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView45"
@@ -31,7 +33,7 @@
         android:gravity="center"
         android:text="Historial de modulo caecus"
         android:textAlignment="textStart"
-        android:textColor="#000"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
