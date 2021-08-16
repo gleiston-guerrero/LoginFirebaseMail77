@@ -17,7 +17,7 @@
       >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgFotoPaciente"
+            android:id="@+id/imgFotoReconocimiento"
             android:layout_width="156dp"
             android:layout_height="132dp"
             android:layout_alignParentStart="true"
@@ -39,19 +39,19 @@
             android:layout_width="220dp"
             android:layout_height="160dp"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imgFotoPaciente"
-            android:layout_toRightOf="@+id/imgFotoPaciente"
+            android:layout_toEndOf="@+id/imgFotoReconocimiento"
+            android:layout_toRightOf="@+id/imgFotoReconocimiento"
             android:orientation="vertical"
             android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imgFotoPaciente"
+            app:layout_constraintStart_toEndOf="@+id/imgFotoReconocimiento"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.047">
 
             <TextView
-                android:id="@+id/txtNombre"
+                android:id="@+id/txtNombreReconocimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"

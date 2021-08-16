@@ -63,8 +63,8 @@ public class adaptadorLista extends RecyclerView.Adapter<adaptadorLista.ViewHold
         ViewHolder(View itemView)
         {
             super(itemView);
-            Nombre=itemView.findViewById(R.id.txtNombre);
-            imgPerfil=itemView.findViewById(R.id.imgFotoPaciente);
+            Nombre=itemView.findViewById(R.id.txtNombreReconocimiento);
+            imgPerfil=itemView.findViewById(R.id.imgFotoReconocimiento);
             Nacimiento=itemView.findViewById(R.id.TxtNacimiento);
             Genero=itemView.findViewById(R.id.txtGenero);
             macAdress=itemView.findViewById(R.id.txtMacdispositivo);

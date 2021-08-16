@@ -2,8 +2,6 @@ package com.example.loginfirebasemail77;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +50,7 @@ public class informaciondispositivo extends AppCompatActivity {
         genero=findViewById(R.id.TxtPerfilGenero);
         mac2=findViewById(R.id.txtPerfilMacdispositivo);
         nombredispo=findViewById(R.id.txtPerfilDeciveName);
-        imgView=findViewById(R.id.imgFotoPaciente);
+        imgView=findViewById(R.id.imgFotoReconocimiento);
         fecha=findViewById(R.id.TxtPerfilNacimiento);
         estado=findViewById(R.id.switch1);
         bntGraficas=findViewById(R.id.bntGraficas);

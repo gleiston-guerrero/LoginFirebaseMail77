@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +68,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class registroReconocimiento extends AppCompatActivity {
 
@@ -93,13 +96,14 @@ public class registroReconocimiento extends AppCompatActivity {
     private EditText editText;
     TTSManager ttsManager=null;
     String text="No hay";
-
+    String mac="";
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     StorageReference storageReference;
     Translator translator;
-
+    reconocimientoFire r= new reconocimientoFire();
+    Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +113,14 @@ public class registroReconocimiento extends AppCompatActivity {
         bntChoosePicture=findViewById(R.id.idGaleria);
         listaView = findViewById(R.id.listaPaciente);
         btnOpenCamara=findViewById(R.id.btnOpenCamara3);
+
+        mac=getIntent().getExtras().getString("mac");
+
+        aSwitch=findViewById(R.id.switch3);
         labeler= ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
         ttsManager = new TTSManager();
         ttsManager.init(this);
+
         inicializarFirebase();
         esp32cam();
 
@@ -125,6 +134,7 @@ public class registroReconocimiento extends AppCompatActivity {
                 galleryLauncher.launch(storIntent);
             }
         });
+
         galleryLauncher=registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -143,13 +153,21 @@ public class registroReconocimiento extends AppCompatActivity {
                     }
                 }
         );
+
         listaView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 selectReconocimiento= (reconocimientoFire) parent.getItemAtPosition(position);
                 text=selectReconocimiento.getReconocimiento().toString();
-                prepareModel(text);
+                if(aSwitch.isChecked())
+                {
+                 prepareModel(text);
+                }else
+                {
+                 ttsManager.initQueue(text);
+                }
+
                 return false;
 
             }
@@ -176,6 +194,8 @@ public class registroReconocimiento extends AppCompatActivity {
                             ivPicture.setImageBitmap(photo);
                             inputImage=InputImage.fromBitmap(photo,0);
                             processImage();
+
+
                         }catch (Exception e)
                         {
                             Log.d(TAG, "onActivityResult: "+e.getMessage());
@@ -187,7 +207,6 @@ public class registroReconocimiento extends AppCompatActivity {
     }
     public String nombreAleatodio()
     {
-
         int p=(int) (Math.random()*25+1); int s=(int) (Math.random()*25+1);
         int t=(int) (Math.random()*25+1);int c=(int) (Math.random()*25+1);
         int numero1=(int) (Math.random()*1012+2111);
@@ -210,9 +229,11 @@ public class registroReconocimiento extends AppCompatActivity {
                     System.out.println(baseRe.replace("%2F","/"));
                     byte[] decodedString = Base64.decode(base, Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    inputImage=InputImage.fromBitmap(decodedByte,0);
                     ivPicture.setImageBitmap(decodedByte);
+                    processImage();
 
-                    StorageReference reference=storageReference.child("esp32Photo");
+                    StorageReference reference=storageReference.child(nombreAleatodio());
                     UploadTask uploadTask = reference.putBytes(decodedString);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -238,17 +259,49 @@ public class registroReconocimiento extends AppCompatActivity {
                         @Override
                         public void onComplete(Task<Uri> task) {
                             Uri dUri=task.getResult();
-                             System.out.println("Uri "+dUri.toString());
+                            guardarreconocimiento(dUri.toString());
+                            System.out.println("Uri "+dUri.toString());
                         }
                     });
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println("elementos: "+error.getMessage());
             }
         });
+    }
+    public void guardarreconocimiento(String url)
+    {
+        r.setIdReconocimiento(UUID.randomUUID().toString());
+        r.setConfianza(StringConfianza());
+        r.setReconocimiento(Stringreconocimiento());
+        r.setMacDispositivo(mac);
+        r.setUrl(url);
+
+        databaseReference.child("reconocimiento").child(r.getIdReconocimiento()).setValue(r);
+        ttsManager.initQueue("Se guardó el reconocimiento");
+
+
+    }
+    public String Stringreconocimiento()
+    {
+
+        String html="";
+        for (int i=0; i<listReconocimiento.size(); i++) {
+
+            html=listReconocimiento.get(i).getReconocimiento().toString()+";"+html;
+        }
+        return html;
+    }
+    public String StringConfianza()
+    {
+        String html="";
+        for (int i=0; i<listReconocimiento.size(); i++) {
+
+            html=listReconocimiento.get(i).getConfianza().toString()+";"+html;
+        }
+        return html;
     }
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
@@ -275,7 +328,6 @@ public class registroReconocimiento extends AppCompatActivity {
     }
 
     private void prepareModel(String text) {
-
         TranslatorOptions options =
                 new TranslatorOptions.Builder()
                         .setSourceLanguage(TranslateLanguage.fromLanguageTag("en"))
@@ -293,23 +345,11 @@ public class registroReconocimiento extends AppCompatActivity {
             }
         });
     }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ttsManager.shutDown();
     }
-    public void abriGaleria(View view)
-    {
-        Toast.makeText(registroReconocimiento.this, "Buscar img",Toast.LENGTH_SHORT).show();
-        Intent storIntent= new Intent();
-        storIntent.setType("image/*");
-        storIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryLauncher.launch(storIntent);
-
-    }
-
     private void processImage() {
         labeler.process(inputImage)
                 .addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
@@ -321,21 +361,52 @@ public class registroReconocimiento extends AppCompatActivity {
                         for (ImageLabel label: imageLabels)
                         {
                             listReconocimiento.add(new reconocimientoFire((label.getConfidence()+""),label.getText()));
-                            // txtResult.setText(result);
+
                         }
                         arrayAdapterreconocimientoFire = new ArrayAdapter<reconocimientoFire>(registroReconocimiento.this, android.R.layout.simple_list_item_1, listReconocimiento);
                         listaView.setAdapter(arrayAdapterreconocimientoFire);
 
+                        Reprodicir();
                     }
-
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
                 Log.d(TAG,"onFailure"+e.getMessage());
             }
         });
-    }
 
+    }
+    public void Reprodicir()
+    {
+        if(aSwitch.isChecked())
+        {
+
+        try {
+         prepareModel(listReconocimiento.get(1).getReconocimiento().toString());
+         Thread.sleep( 4000);
+         } catch (Exception e) {
+         System.out.println(e);
+                }
+            try {
+                prepareModel(listReconocimiento.get(2).getReconocimiento().toString());
+                Thread.sleep( 4000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }else
+        {
+            for (int i=0; i<listReconocimiento.size(); i++) {
+                try {
+                    ttsManager.initQueue(listReconocimiento.get(i).getReconocimiento().toString());
+                    Thread.sleep( 1000);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+
+    }
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL("https://res.cloudinary.com/durxpegdm/image/upload/v1627940101/3d-flame-279_xt18fx.png");
@@ -350,11 +421,6 @@ public class registroReconocimiento extends AppCompatActivity {
             return null;
         }
     }
-    public void reproducir()
-    {
-
-    }
-
     @Override
     public  void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults )
     {

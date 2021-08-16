@@ -24,17 +24,15 @@ public class cuentapaciente extends AppCompatActivity {
 
     EditText txtNameDecive;
     EditText txtMac;
-
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
     Button btnIngresarPaciente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cuentapaciente);
-        txtMac=findViewById(R.id.txtMac);
+        txtMac=findViewById(R.id.txtMacDispo);
         txtNameDecive=findViewById(R.id.txtNamePaciente);
         inicializarFirebase();
         btnIngresarPaciente=findViewById(R.id.btnIngresarPaciente);
@@ -44,8 +42,6 @@ public class cuentapaciente extends AppCompatActivity {
                 buscarUsuario();
             }
         });
-
-
     }
     public void buscarUsuario()
     {
@@ -62,12 +58,13 @@ public class cuentapaciente extends AppCompatActivity {
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
     }
     public void validarMac()
     {
-      databaseReference.child("Paciente").orderByChild("macadress").addValueEventListener(new ValueEventListener() {
+      databaseReference.child("Paciente").orderByChild("macadress").equalTo(txtMac.getText().toString()).addValueEventListener(new ValueEventListener() {
           @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot objShaptshot : snapshot.getChildren())
@@ -85,6 +82,7 @@ public class cuentapaciente extends AppCompatActivity {
     public void goIngresar()
     {
      Intent i = new Intent(cuentapaciente.this,registroReconocimiento.class);
+     i.putExtra("mac",txtMac.getText().toString());
      startActivity(i);
     }
     private void inicializarFirebase()
