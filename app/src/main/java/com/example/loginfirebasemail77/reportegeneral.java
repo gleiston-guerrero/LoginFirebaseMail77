@@ -85,7 +85,6 @@ public class reportegeneral extends AppCompatActivity {
             }
         });
     }
-
     private void cantidadPaciente() {
         databaseReference.child("Paciente").addValueEventListener(new ValueEventListener() {
             @Override
@@ -100,7 +99,6 @@ public class reportegeneral extends AppCompatActivity {
             }
         });
     }
-
     public void generalGrafica(ArrayList alertas)
     {
         cantUbicaciones=Integer.parseInt(alertas.get(0).toString());
@@ -129,7 +127,7 @@ public class reportegeneral extends AppCompatActivity {
         pieChart.setDrawEntryLabels(false);
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterText("Cantidades totales");
-        pieChart.animate();
+
 
     }
 }

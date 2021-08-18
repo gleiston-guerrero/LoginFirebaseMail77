@@ -109,6 +109,7 @@ public class graficas extends AppCompatActivity implements GoogleMap.OnMarkerCli
 
         BarData barData= new BarData(barDataSet);
         barChart.setFitBars(true);
+        barChart.setMaxHighlightDistance(2000);
         barChart.setData(barData);
         barChart.getDescription().setText("Bar Chart Example");
         barChart.animateY(2000);

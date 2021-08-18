@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".graficas">
 
-    <View
+   <!-- <View
         android:id="@+id/view17"
         android:layout_width="0dp"
         android:layout_height="398dp"
@@ -16,13 +16,13 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
     <View
         android:id="@+id/view16"
         android:layout_width="0dp"
         android:layout_height="348dp"
-        android:background="@drawable/ic_wave__5_"
+        android:background="@drawable/ic_wave__4_"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,8 +58,9 @@
             android:gravity="center"
             android:text="Datos gráficos"
             android:textAlignment="textStart"
-            android:textColor="#4E4E4E"
+            android:textColor="#FFFFFF"
             android:textSize="48sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlCompat"
@@ -75,7 +76,7 @@
             android:gravity="center"
             android:text="Recuerda siempre estar atento a tus seres queridos"
             android:textAlignment="textStart"
-            android:textColor="#2C2C2C"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -111,6 +112,7 @@
         android:textAlignment="center"
         android:textColor="#222222"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,6 +122,7 @@
 
     <fragment
         android:id="@+id/map"
+
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="366dp"
         android:layout_height="305dp"
