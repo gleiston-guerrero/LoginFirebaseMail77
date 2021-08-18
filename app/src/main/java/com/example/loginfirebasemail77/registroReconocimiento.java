@@ -218,7 +218,7 @@ public class registroReconocimiento extends AppCompatActivity {
         return  aleatorio;
     }
     private void esp32cam() {
-        databaseReference.child("esp32cam").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("esp32cam").limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:onClick="goAll_Alertas"
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
@@ -167,15 +168,15 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnMensajes"
+                    android:id="@+id/btnAlertas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="#6AB385"
                     android:fontFamily="@font/abel"
-                    android:onClick="addPaciente"
-                    android:text="Historial"
+                    android:onClick="goAll_Alertas"
+                    android:text="Alertas"
                     android:textAlignment="textStart"
                     android:textIsSelectable="false"
                     android:textSize="15dp"

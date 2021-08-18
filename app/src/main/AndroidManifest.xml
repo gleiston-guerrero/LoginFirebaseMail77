@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".reconocimientoTimeReal"></activity>
+        <activity android:name=".allAlertas"></activity>
+        <activity android:name=".reconocimientoTimeReal" />
         <activity android:name=".graficas" />
         <activity android:name=".registroReconocimiento" />
         <activity android:name=".cuentapaciente" />
