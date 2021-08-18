@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -36,6 +37,7 @@ public class reportegeneral extends AppCompatActivity {
 
         inicializarFirebase();
         obtenerUbicaciones();
+        cantidadPaciente();
 
 
     }
@@ -72,19 +74,45 @@ public class reportegeneral extends AppCompatActivity {
         databaseReference.child("reconocimiento").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 alertas.add(snapshot.getChildrenCount());
                 generalGrafica(alertas);
+
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
+
+    private void cantidadPaciente() {
+        databaseReference.child("Paciente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                TextView textView=findViewById(R.id.txtCantUsuarioa);
+                textView.setText(snapshot.getChildrenCount()+"");
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
     public void generalGrafica(ArrayList alertas)
     {
         cantUbicaciones=Integer.parseInt(alertas.get(0).toString());
         cantSensores=Integer.parseInt(alertas.get(1).toString());
         cantReconocimiento=Integer.parseInt(alertas.get(2).toString());
+
+        TextView textView1=findViewById(R.id.txtCantAlert);
+        textView1.setText((cantUbicaciones+cantSensores+cantReconocimiento)+"");
+
+        TextView textView=findViewById(R.id.txtCantReconocimiento);
+        textView.setText(cantReconocimiento+"");
+
 
         ArrayList<PieEntry> visitors= new ArrayList<>();
         visitors.add(new PieEntry(cantUbicaciones,"Ubicaciones"));
