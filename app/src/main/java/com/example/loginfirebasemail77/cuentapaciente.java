@@ -2,7 +2,13 @@ package com.example.loginfirebasemail77;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +77,7 @@ public class cuentapaciente extends AppCompatActivity {
                     {
                         String Mac= objShaptshot.child("macadress").getValue().toString();
                         System.out.println("Mac: "+Mac);
+                        notificacion();
                         goIngresar();
                     }
                 }
@@ -91,6 +98,22 @@ public class cuentapaciente extends AppCompatActivity {
      firebaseDatabase=FirebaseDatabase.getInstance();
      databaseReference=firebaseDatabase.getReference();
     }
+    private void notificacion() {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel =
+                    new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText("Code Sphere")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentText("Su cuenta esta en iniciada");
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(999, builder.build());
+    }
 
 }
