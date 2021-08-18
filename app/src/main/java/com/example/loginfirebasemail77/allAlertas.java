@@ -112,6 +112,7 @@ public class allAlertas extends AppCompatActivity {
         adaptador1=new ArrayAdapter(this,android.R.layout.simple_list_item_1,alertas);
         listView=findViewById(R.id.listaAlertas);
         listView.setAdapter(adaptador1);
+
     }
 
 }

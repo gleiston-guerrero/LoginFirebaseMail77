@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="Francisco"
+                android:text="Fdecive"
                 android:fontFamily="@font/abel"
                 android:inputType="textPersonName" />
 
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="Francisco"
+                android:text="2C:F4:32:19:78:F6"
                 android:fontFamily="@font/abel"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
