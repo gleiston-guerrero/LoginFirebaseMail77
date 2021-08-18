@@ -97,7 +97,6 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:layout_conversion_absoluteHeight="272dp"
         tools:layout_conversion_absoluteWidth="372dp">
-
     </com.github.mikephil.charting.charts.BarChart>
 
     <TextView

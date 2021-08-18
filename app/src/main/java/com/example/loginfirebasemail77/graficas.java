@@ -113,7 +113,6 @@ public class graficas extends AppCompatActivity implements GoogleMap.OnMarkerCli
         barChart.getDescription().setText("Bar Chart Example");
         barChart.animateY(2000);
 
-
     }
     private void informacionSensores() {
         databaseReference.child("Sensores").orderByKey().equalTo("2C:F4:32:19:78:F6").addValueEventListener(new ValueEventListener() {
@@ -139,9 +138,9 @@ public class graficas extends AppCompatActivity implements GoogleMap.OnMarkerCli
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot objShaptshot : snapshot.getChildren())
                 {
-                    double x=Double.parseDouble(objShaptshot.child("coorX").getValue().toString());
-                    double y=Double.parseDouble(objShaptshot.child("coorY").getValue().toString());
-                    camaraMarcadores(x,y);
+                  double x=Double.parseDouble(objShaptshot.child("coorX").getValue().toString());
+                  double y=Double.parseDouble(objShaptshot.child("coorY").getValue().toString());
+                  camaraMarcadores(x,y);
                 }
             }
             @Override

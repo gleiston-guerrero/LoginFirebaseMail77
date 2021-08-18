@@ -193,7 +193,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#AAB149"
                     android:fontFamily="@font/abel"
-                    android:onClick="goInformacionSensores"
+                    android:onClick="goReporte"
                     android:text="Reporte"
                     android:textAlignment="textStart"
                     android:textIsSelectable="false"

@@ -35,6 +35,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+    public void goReporte(View view)
+    {
+        Intent i = new Intent(HomeActivity.this,reportegeneral.class);
+        i.putExtra("idUsuario",idUsuario);
+        startActivity(i);
+    }
     public void goAll_Alertas(View view)
     {
         Intent i = new Intent(HomeActivity.this,allAlertas.class);
