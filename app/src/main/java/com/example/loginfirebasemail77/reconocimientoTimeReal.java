@@ -42,7 +42,7 @@ public class reconocimientoTimeReal extends AppCompatActivity {
         databaseReference=firebaseDatabase.getReference();
     }
     private void esp32cam() {
-        databaseReference.child("reconocimiento").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("reconocimiento").orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

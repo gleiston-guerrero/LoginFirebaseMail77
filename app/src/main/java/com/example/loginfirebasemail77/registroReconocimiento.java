@@ -123,7 +123,7 @@ public class registroReconocimiento extends AppCompatActivity {
 
         inicializarFirebase();
         esp32cam();
-
+        getInformacionSensores();
         bntChoosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +195,40 @@ public class registroReconocimiento extends AppCompatActivity {
                             inputImage=InputImage.fromBitmap(photo,0);
                             processImage();
 
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] dataq = baos.toByteArray();
 
+                            StorageReference reference=storageReference.child(nombreAleatodio());
+                            UploadTask uploadTask = reference.putBytes(dataq);
+                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+
+                                }
+                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                }
+                            });
+
+                            Task<Uri> uriTask= uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then( Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                    if(!task.isSuccessful()){
+                                        throw Objects.requireNonNull(task.getException());
+                                    }
+                                    return reference.getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(Task<Uri> task) {
+                                    Uri dUri=task.getResult();
+                                    guardarreconocimiento(dUri.toString());
+                                    System.out.println("Uri "+dUri.toString());
+                                }
+                            });
                         }catch (Exception e)
                         {
                             Log.d(TAG, "onActivityResult: "+e.getMessage());
@@ -378,24 +411,6 @@ public class registroReconocimiento extends AppCompatActivity {
     }
     public void Reprodicir()
     {
-        if(aSwitch.isChecked())
-        {
-
-        try {
-         prepareModel(listReconocimiento.get(1).getReconocimiento().toString());
-         Thread.sleep( 4000);
-         } catch (Exception e) {
-         System.out.println(e);
-                }
-            try {
-                prepareModel(listReconocimiento.get(2).getReconocimiento().toString());
-                Thread.sleep( 4000);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
-        }else
-        {
             for (int i=0; i<listReconocimiento.size(); i++) {
                 try {
                     ttsManager.initQueue(listReconocimiento.get(i).getReconocimiento().toString());
@@ -404,9 +419,64 @@ public class registroReconocimiento extends AppCompatActivity {
                     System.out.println(e);
                 }
             }
+    }
+    String derecha, izquierda, frontal;
+    private void getInformacionSensores() {
+        databaseReference.child("Sensores").orderByKey().equalTo("2C:F4:32:19:78:F6").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot objShaptshot : snapshot.getChildren())
+                {
+                    //derecha=(objShaptshot.child("DistanciaDerecha").getValue().toString());
+                    //frontal=(objShaptshot.child("DistanciaFrente").getValue().toString());
+                    //izquierda=(objShaptshot.child("DistanciaIzquierda").getValue().toString());
+                    try {
+                        validaciones(objShaptshot.child("DistanciaDerecha").getValue().toString(),objShaptshot.child("DistanciaFrente").getValue().toString(),objShaptshot.child("DistanciaIzquierda").getValue().toString());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("elementos: "+error.getMessage());
+            }
+        });
+    }
+    public void validaciones(String derecha,String frontal, String izquierda  ) throws InterruptedException {
+
+        int Derecho=Integer.parseInt(derecha);
+        int Frontal=Integer.parseInt(frontal);
+        int Izquierdo=Integer.parseInt(izquierda);
+        int suma=Derecho+Frontal+Izquierdo;
+        if(suma<1)
+        {
+
+            ttsManager.initQueue("no detection");
+
+        }
+        if (Derecho<100)
+        {
+            int valor=(Derecho*(1/100));
+            ttsManager.initQueue("Right "+valor+" metro");
+            Thread.sleep( 1000);
+        }
+        if(Izquierdo<100)
+        {
+            int valor=(Izquierdo*(1/100));
+            ttsManager.initQueue("Left "+valor+" metro");
+            Thread.sleep( 1000);
+        }
+        if(Frontal<100)
+        {
+            int valor=(Frontal*(1/100));
+            ttsManager.initQueue("Frontal "+valor+" metro" );
+            Thread.sleep( 1000);
         }
 
     }
+
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL("https://res.cloudinary.com/durxpegdm/image/upload/v1627940101/3d-flame-279_xt18fx.png");

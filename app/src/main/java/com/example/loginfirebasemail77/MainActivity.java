@@ -83,30 +83,31 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(Task<AuthResult> task) {
                             if(task.isSuccessful())
                             {
-                            listapaciente();
-                            }else
+                                    verificarUsuario();
+                            }
+                            else
                             {
                                 String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                                 dameToastdeerror(errorCode);
                             }
                         }
                     });
-
                 }
             }
         });
         btn_recuperar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
 
             }
         });
-
-
     }
     public void goLoginPaciente(View view)
-    { Intent i = new Intent(MainActivity.this,cuentapaciente.class);
-      startActivity(i); }
+    {
+      Intent i = new Intent(MainActivity.this,cuentapaciente.class);
+      startActivity(i);
+    }
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase= FirebaseDatabase.getInstance();
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
-    private void listapaciente() {
+    private void verificarUsuario() {
         databaseReference.child("Usuarios").orderByChild("email").equalTo(et_mail.getText().toString()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -132,10 +133,6 @@ public class MainActivity extends AppCompatActivity {
                     usuario u = objShaptshot.getValue(usuario.class);
                     list.add(u);
                     irahome(u.getUsername(),u.getIdUsuario());
-                    //System.out.println("username: "+u.getUsername()+" id: "+u.getIdUsuario());
-                    //username.setText(u.getUsername());
-                    //idUsuario.setText(u.getIdUsuario());
-
                 }
 
             }

@@ -49,9 +49,7 @@ public class RegistrarActivity extends AppCompatActivity {
         userName=findViewById(R.id.username);
         numero=findViewById(R.id.numero);
 
-
         btn_registrar = findViewById(R.id.btn_registrar);
-
 
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +63,7 @@ public class RegistrarActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                guardarTabla();
+                                registerUser();
                                 Toast.makeText(RegistrarActivity.this, "Usuario creado con exito", Toast.LENGTH_SHORT).show();
                                 finish();
                             }else {
@@ -74,26 +72,20 @@ public class RegistrarActivity extends AppCompatActivity {
                             }
                         }
 
-                        private void guardarTabla() {
+                        private void registerUser() {
                             usuario u= new usuario();
                             u.setIdUsuario(UUID.randomUUID().toString());
                             u.setUsername(userName.getText().toString());
                             u.setEmail(mail);
                             u.setNumero(numero.getText().toString());
                             databaseReference.child("Usuarios").child(u.getIdUsuario()).setValue(u);
-
                         }
                     });
                 }else {
                     Toast.makeText(RegistrarActivity.this, "Completa todos los datos..!!", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
-
-
-
     }//fin del oncreate!
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(this);
