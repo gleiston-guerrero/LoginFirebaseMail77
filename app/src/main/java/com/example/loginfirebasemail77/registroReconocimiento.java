@@ -104,7 +104,7 @@ public class registroReconocimiento extends AppCompatActivity {
     Translator translator;
     reconocimientoFire r= new reconocimientoFire();
     Switch aSwitch;
-
+    Switch voz;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +113,7 @@ public class registroReconocimiento extends AppCompatActivity {
         bntChoosePicture=findViewById(R.id.idGaleria);
         listaView = findViewById(R.id.listaPaciente);
         btnOpenCamara=findViewById(R.id.btnOpenCamara3);
-
+        voz=findViewById(R.id.voceswitch);
         mac=getIntent().getExtras().getString("mac");
 
         aSwitch=findViewById(R.id.switch3);
@@ -427,11 +427,10 @@ public class registroReconocimiento extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot objShaptshot : snapshot.getChildren())
                 {
-                    //derecha=(objShaptshot.child("DistanciaDerecha").getValue().toString());
-                    //frontal=(objShaptshot.child("DistanciaFrente").getValue().toString());
-                    //izquierda=(objShaptshot.child("DistanciaIzquierda").getValue().toString());
-                    try {
+                    try
+                    {
                         validaciones(objShaptshot.child("DistanciaDerecha").getValue().toString(),objShaptshot.child("DistanciaFrente").getValue().toString(),objShaptshot.child("DistanciaIzquierda").getValue().toString());
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -444,36 +443,42 @@ public class registroReconocimiento extends AppCompatActivity {
             }
         });
     }
-    public void validaciones(String derecha,String frontal, String izquierda  ) throws InterruptedException {
+    public void validaciones(String derecha,String frontal, String izquierda) throws InterruptedException {
 
-        int Derecho=Integer.parseInt(derecha);
-        int Frontal=Integer.parseInt(frontal);
-        int Izquierdo=Integer.parseInt(izquierda);
-        int suma=Derecho+Frontal+Izquierdo;
-        if(suma<1)
+        if(voz.isChecked())
+        {
+            double Derecho=Integer.parseInt(derecha);
+            double Frontal=Integer.parseInt(frontal);
+            double Izquierdo=Integer.parseInt(izquierda);
+            double suma=Derecho+Frontal+Izquierdo;
+            if(suma<1)
+            {
+                ttsManager.initQueue("no detection");
+            }
+            if (Derecho<100)
+            {
+                double valor=(Derecho*(1/100));
+                ttsManager.initQueue("Right "+Derecho+" centimeters");
+                Thread.sleep( 700);
+            }
+            if(Izquierdo<100)
+            {
+                double valor=(Izquierdo*(1/100));
+                ttsManager.initQueue("Left "+Izquierdo+" centimeters");
+                Thread.sleep( 700);
+            }
+            if(Frontal<100)
+            {
+                double valor=(Frontal*(1/100));
+                ttsManager.initQueue("Frontal "+Frontal+" centimeters" );
+                Thread.sleep( 700);
+            }
+
+        }else
         {
 
-            ttsManager.initQueue("no detection");
+        }
 
-        }
-        if (Derecho<100)
-        {
-            int valor=(Derecho*(1/100));
-            ttsManager.initQueue("Right "+valor+" metro");
-            Thread.sleep( 1000);
-        }
-        if(Izquierdo<100)
-        {
-            int valor=(Izquierdo*(1/100));
-            ttsManager.initQueue("Left "+valor+" metro");
-            Thread.sleep( 1000);
-        }
-        if(Frontal<100)
-        {
-            int valor=(Frontal*(1/100));
-            ttsManager.initQueue("Frontal "+valor+" metro" );
-            Thread.sleep( 1000);
-        }
 
     }
 
